@@ -1,10 +1,23 @@
-import { createClient } from "@supabase/supabase-js";
+import { getAuth } from "firebase/auth";
 
-const supabase_Urls = "https://bzfwiihhxzlkzczmzkec.supabase.co";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-const supabase_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6ZndpaWhoeHpsa3pjem16a2VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDYxMjU4NzUsImV4cCI6MjAyMTcwMTg3NX0.3T_pZQrVDrJZ_-E7w5cFSimABK7d0jCEjA_N0QLGBO4";
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCIbr1mDNqvIY92cDnVOjZSviSTYicRUb4",
+  authDomain: "react-user-auth-ec351.firebaseapp.com",
+  projectId: "react-user-auth-ec351",
+  storageBucket: "react-user-auth-ec351.appspot.com",
+  messagingSenderId: "576095728176",
+  appId: "1:576095728176:web:934cd7e0afc4ead09ef3f5",
+};
 
-const supabase = createClient(supabase_Urls, supabase_KEY);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-export { supabase };
+const auth = getAuth(app);
+
+export { auth };

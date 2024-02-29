@@ -7,7 +7,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PASSWORD_REGEX, USER_REGEX } from "../validator/Validator";
-import { supabase } from "../../configSupa/config.Supa";
+
+import { auth } from "../../configSupa/config.Supa";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import SignIn from "../signIn/SignIn";
 
 // const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9_]{3,23}$/;
 // const PASSWORD_REGEX =
@@ -55,42 +58,40 @@ const Register = () => {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
-
-    const V1 = USER_REGEX.test(user);
-    const V2 = PASSWORD_REGEX.test(password);
-
-    if (!V1 || !V2) {
-      setErrMsg("Invalid Entry!");
-      return;
-    }
-    setSuccess(true);
-    console.log(user, password);
-  };
-
-  const createUser = async () => {
     try {
-      const { error } = await supabase
-        .from("userAuth")
-        .insert({ name: user, password: password, match_pwd: matchPassword })
-        .single();
+      createUserWithEmailAndPassword(auth, user, password)
+        .then((userCredential) => {
+          console.log(userCredential);
+        })
+        .catch((err) => alert(err));
 
-      if (error) throw error;
+      const V1 = USER_REGEX.test(user);
+      const V2 = PASSWORD_REGEX.test(password);
+
+      if (!V1 || !V2) {
+        setErrMsg("Invalid Entry!");
+        return;
+      }
+
+      setSuccess(true);
     } catch (err) {
-      alert(err.message);
+      alert("Error 505");
+      console.log(user, password);
     }
   };
 
   return (
     <>
       {success ? (
-        <section className="true-success">
-          <h1>Success!</h1>
-          <p>
-            <a href="///">Sign In</a>
-          </p>
-        </section>
+        // <section className="true-success">
+        //   <h1>Success!</h1>
+        //   <p>
+        //     <a href="///">Sign In</a>
+        //   </p>
+        // </section>
+        <SignIn />
       ) : (
-        <section onSubmit={handlesubmit}>
+        <section>
           <p
             ref={errRef}
             className={errMsg ? "errmsg" : "offscreen"}
@@ -100,7 +101,7 @@ const Register = () => {
           </p>
 
           <h1>Register</h1>
-          <form>
+          <form onSubmit={handlesubmit}>
             <label htmlFor="username">Username:</label>
             <span className={validName ? "valid" : "hide"}>
               <FontAwesomeIcon icon={faCheck} />
@@ -204,19 +205,18 @@ const Register = () => {
 
             <button
               disabled={!user || !password || !matchPassword ? true : false}
-              onClick={() => createUser()}
             >
               Create Account
             </button>
+            <p className="link-signin">
+              Already registered?
+              <br />
+              <span className="line">
+                {/*put router link here*/}
+                <a href="/signIn">SignIn!</a>
+              </span>
+            </p>
           </form>
-          <p className="link-signin">
-            Already registered?
-            <br />
-            <span className="line">
-              {/*put router link here*/}
-              <a href="/">Sign In</a>
-            </span>
-          </p>
         </section>
       )}
     </>
