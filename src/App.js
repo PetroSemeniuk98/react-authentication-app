@@ -1,16 +1,19 @@
 import { Route, Routes } from "react-router";
-import { Register } from "./components/register/Register";
 
-import SignIn from "./components/signIn/SignIn";
-import AuthDetailsUser from "./components/authDetailsUser/AuthDetailsUser";
+
+import HomePage from "./pages/HomePage";
+import LoginPages from "./pages/LoginPages";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
+  console.log(process.env);
   return (
+
     <main className="App">
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/signIn" element={<SignIn />} />
-        <Route path="/signedIn" element={<AuthDetailsUser />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPages />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </main>
   );
