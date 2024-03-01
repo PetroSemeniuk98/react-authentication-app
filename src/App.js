@@ -1,14 +1,11 @@
 import { Route, Routes } from "react-router";
 
-
 import HomePage from "./pages/HomePage";
 import LoginPages from "./pages/LoginPages";
 import RegisterPage from "./pages/RegisterPage";
 
 function App() {
-  console.log(process.env);
   return (
-
     <main className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
