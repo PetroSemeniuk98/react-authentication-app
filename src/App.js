@@ -4,9 +4,11 @@ import HomePage from "./pages/HomePage";
 import LoginPages from "./pages/LoginPages";
 import RegisterPage from "./pages/RegisterPage";
 
+
 function App() {
   return (
     <main className="App">
+      {}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPages />} />
